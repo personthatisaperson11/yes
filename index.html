@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUCK MANIA 🦆</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@500;600;700;800&display=swap');
+:root{--pink:#ff97c8;--blue:#8ddcff;--yellow:#ffe98d;--mint:#b7f3de;--purple:#c6a9ff;--ink:#2d3150;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;overflow-x:hidden;font-family:'Nunito',sans-serif;color:var(--ink);background:linear-gradient(135deg,#b9f1ff,#ffd8ed 40%,#d9c8ff 68%,#c7f7df);position:relative}
+body:before,body:after{content:"";position:fixed;inset:-20%;pointer-events:none;z-index:0}
+body:before{background:repeating-linear-gradient(11deg,rgba(255,255,255,.13) 0 14px,rgba(255,121,185,.08) 14px 28px);animation:wobble 7s ease-in-out infinite alternate}
+body:after{background:radial-gradient(circle at 18% 72%,rgba(255,255,255,.18) 0 22px,transparent 23px),radial-gradient(circle at 76% 52%,rgba(255,255,255,.15) 0 18px,transparent 19px);animation:spinbg 16s linear infinite}
+@keyframes wobble{to{transform:rotate(3deg) translateX(1%)}}
+@keyframes spinbg{to{transform:rotate(360deg)}}
+button{font:inherit;cursor:pointer}.app{position:relative;z-index:2;width:min(1180px,94%);margin:auto;padding:22px 0 44px}
+header{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:16px}.logo h1{margin:0;font:700 clamp(38px,7vw,62px)/.95 'Fredoka',sans-serif;color:#4e3a77;text-shadow:0 4px #fff}.logo p{margin:8px 0 0;font-weight:800;background:rgba(255,255,255,.76);display:inline-block;padding:7px 11px;border-radius:999px}.top{display:flex;gap:8px;flex-wrap:wrap}.pill,.reset{border:0;border-radius:15px;padding:10px 13px;font-weight:900;box-shadow:0 7px 16px rgba(77,57,110,.12)}.pill{background:rgba(255,255,255,.9)}.reset{background:#4e3a77;color:#fff}
+.layout{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}.card{background:rgba(255,255,255,.93);border:2px solid rgba(255,255,255,.88);border-radius:28px;box-shadow:0 20px 50px rgba(77,57,110,.14);backdrop-filter:blur(7px);padding:22px}
+.story{min-height:670px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}.scene-bg{position:absolute;inset:0;overflow:hidden}.blob{position:absolute;border-radius:50%;opacity:.66;animation:blob 6s ease-in-out infinite alternate}.b1{width:180px;height:180px;background:#fff19c;left:-35px;top:65px}.b2{width:230px;height:230px;background:#c6a9ff;right:-70px;top:20px;animation-delay:1s}.b3{width:190px;height:190px;background:#a8f1d4;left:25%;bottom:12%;animation-delay:2s}.b4{width:120px;height:120px;background:#ff9dcf;right:24%;bottom:25%;animation-delay:3s}@keyframes blob{to{transform:translate(22px,-18px) rotate(15deg) scale(1.08)}}
+.hill{position:absolute;left:0;right:0;bottom:0;height:33%;background:linear-gradient(#9fe5ff,#75c8ef);border-top:5px solid rgba(255,255,255,.45)}
+.story-duck{position:absolute;font-size:60px;animation:floatduck 1.2s ease-in-out infinite;z-index:2}.d1{left:9%;bottom:22%}.d2{left:30%;bottom:10%;font-size:40px;animation-delay:.4s}.d3{right:12%;bottom:19%;font-size:76px;animation-delay:.8s}@keyframes floatduck{50%{transform:translateY(-16px) rotate(4deg)}}
+.storybox{width:min(800px,95%);margin:0 auto 18px;background:rgba(255,255,255,.97);border-radius:25px;padding:20px;position:relative;z-index:5;text-align:center}.chapter{display:inline-block;background:#f3edff;color:#5a4a7e;border-radius:999px;padding:6px 11px;font-size:13px;font-weight:900}.storybox h2{margin:9px 0 8px;font:700 31px/1.1 'Fredoka',sans-serif;color:#4e3a77}.storybox p{margin:0;font-size:16px;line-height:1.55;font-weight:800}.choices{margin-top:15px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{border:2px solid #ece6ff;border-radius:18px;padding:14px;text-align:left;background:linear-gradient(135deg,#fff,#f5fbff);color:#443861;font-weight:900;transition:.16s}.choice:hover{transform:translateY(-3px) rotate(-.5deg);box-shadow:0 10px 18px rgba(84,67,117,.12)}
+.side{display:grid;gap:16px}.side h3{margin:0 0 12px;font:700 22px 'Fredoka',sans-serif;color:#4e3a77}.meter{margin:11px 0}.meterline{display:flex;justify-content:space-between;margin-bottom:6px;font-weight:900}.bar{height:15px;background:#edf0f5;border-radius:999px;overflow:hidden}.fill{height:100%;border-radius:inherit;transition:width .25s}.energy{background:#73caff}.chaos{background:#ff7fae}.fame{background:#c5a3ff}.stats{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.stat{background:#f7f4ff;border-radius:15px;padding:10px;font-weight:900}.inventory{display:flex;flex-wrap:wrap;gap:8px}.item{background:#fff0f7;border-radius:999px;padding:8px 10px;font-weight:800}.small{font-size:13px;opacity:.68;line-height:1.45}.log{display:grid;gap:7px;max-height:190px;overflow:auto}.event{background:#f7fbff;border-radius:13px;padding:8px 10px;font-size:14px;font-weight:700}
+.runner{position:fixed;left:-120px;bottom:70px;z-index:20;display:none;pointer-events:none;font-size:64px;filter:drop-shadow(0 7px 3px rgba(0,0,0,.14))}.runner:after{content:"💨";position:absolute;right:54px;top:18px;font-size:28px}@keyframes run{from{transform:translateX(0) rotate(-3deg)}50%{transform:translateX(55vw) rotate(4deg)}to{transform:translateX(120vw) rotate(-3deg)}}
+.background-text{position:fixed;z-index:1;pointer-events:none;font:700 20px 'Fredoka',sans-serif;color:rgba(78,58,119,.11);animation:floattext 8s ease-in-out infinite alternate}.t1{left:3%;top:30%}.t2{right:3%;top:55%;animation-delay:1.7s}.t3{left:42%;top:7%;animation-delay:3s}@keyframes floattext{to{transform:translateY(-18px) rotate(4deg)}}
+.ending{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(28,19,45,.78);z-index:50;padding:20px}.endingbox{width:min(650px,100%);background:#fff;border-radius:30px;padding:28px;text-align:center;box-shadow:0 28px 90px rgba(0,0,0,.24)}.endingemoji{font-size:92px}.endingbox h2{margin:8px 0;font:700 36px 'Fredoka',sans-serif;color:#4e3a77}.endingbox p{font-weight:800;line-height:1.55}.endbuttons{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}.endbuttons button{border:0;border-radius:15px;padding:12px 16px;background:#ff99c7;color:#fff;font-weight:900}.endbuttons .alt{background:#9bdfff;color:#3c3762}
+@media(max-width:920px){.layout{grid-template-columns:1fr}}@media(max-width:650px){header{flex-direction:column;align-items:flex-start}.choices{grid-template-columns:1fr}.story{min-height:720px}}
+</style>
+</head>
+<body>
+<div class="background-text t1">DUCK DETECTED</div><div class="background-text t2">QUACK QUACK</div><div class="background-text t3">WHY IS THERE A DUCK</div>
+<div class="app">
+<header><div class="logo"><h1>DUCK MANIA 🦆</h1><p>pick your adventure • Shredder is 5 • nothing is normal</p></div><div class="top"><div class="pill">⚡ <span id="energy">100</span></div><div class="pill">💀 <span id="chaos">0</span></div><div class="pill">⭐ <span id="fame">0</span></div><button class="reset" id="resetBtn">restart</button></div></header>
+<div class="layout">
+<main class="card story"><div class="scene-bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div><div class="hill"></div><div class="story-duck d1">🦆</div><div class="story-duck d2">🦆</div><div class="story-duck d3">🦆</div></div><div class="storybox"><div class="chapter" id="chapter">CHAPTER 1</div><h2 id="storyTitle"></h2><p id="storyText"></p><div class="choices" id="choices"></div></div></main>
+<aside class="side"><section class="card"><h3>📋 Shredder's stats</h3><div class="meter"><div class="meterline"><span>⚡ energy</span><span id="energyLabel">100</span></div><div class="bar"><div class="fill energy" id="energyFill"></div></div></div><div class="meter"><div class="meterline"><span>💀 chaos</span><span id="chaosLabel">0</span></div><div class="bar"><div class="fill chaos" id="chaosFill"></div></div></div><div class="meter"><div class="meterline"><span>⭐ fame</span><span id="fameLabel">0</span></div><div class="bar"><div class="fill fame" id="fameFill"></div></div></div><div class="stats"><div class="stat">📍 <span id="location">HOME</span></div><div class="stat">📅 DAY <span id="day">1</span></div><div class="stat">🦆 ducks <span id="duckCount">0</span></div><div class="stat">🍬 candy <span id="candy">0</span></div></div></section><section class="card"><h3>🎒 Shredder's pockets</h3><div class="inventory" id="inventory"></div><p class="small">because apparently a five-year-old needs an inventory system.</p></section><section class="card"><h3>📜 adventure log</h3><div class="log" id="log"></div></section></aside>
+</div></div>
+<div class="runner" id="runner">🦆</div>
+<div class="ending" id="ending"><div class="endingbox"><div class="endingemoji" id="endingEmoji">🍬</div><h2 id="endingTitle"></h2><p id="endingText"></p><div class="endbuttons"><button id="againBtn">START AGAIN 🦆</button><button class="alt" id="chaosBtn">MAKE IT WORSE 💀</button></div></div></div>
+<script>
+"use strict";
+const SAVE_KEY="duckManiaAdventure_v1";
+const defaults={energy:100,chaos:0,fame:0,day:1,location:"HOME",duckCount:0,candy:0,inventory:["🧸 stuffed animal","🍎 apple"],flags:[]};
+let state=loadState(), duckTimer=null;
+function fresh(){return {...defaults,inventory:[...defaults.inventory],flags:[]}}
+function loadState(){try{const raw=localStorage.getItem(SAVE_KEY);if(!raw)return fresh();const p=JSON.parse(raw);return {...fresh(),...p,inventory:Array.isArray(p.inventory)?p.inventory:[...defaults.inventory],flags:Array.isArray(p.flags)?p.flags:[]}}catch(e){return fresh()}}
+function save(){localStorage.setItem(SAVE_KEY,JSON.stringify(state))}
+function addFlag(x){if(!state.flags.includes(x))state.flags.push(x)}
+function addItem(x){if(!state.inventory.includes(x))state.inventory.push(x)}
+function energy(x){state.energy=Math.max(0,Math.min(100,state.energy+x))}
+function chaos(x){state.chaos=Math.max(0,Math.min(100,state.chaos+x))}
+function fame(x){state.fame=Math.max(0,state.fame+x)}
+function day(){state.day++;energy(-4)}
+function log(text){const item=document.createElement("div");item.className="event";item.textContent=text;const box=document.getElementById("log");box.prepend(item);while(box.children.length>14)box.lastElementChild.remove()}
+function ui(){document.getElementById("energy").textContent=state.energy;document.getElementById("chaos").textContent=state.chaos;document.getElementById("fame").textContent=state.fame;document.getElementById("energyLabel").textContent=state.energy;document.getElementById("chaosLabel").textContent=state.chaos;document.getElementById("fameLabel").textContent=state.fame;document.getElementById("energyFill").style.width=state.energy+"%";document.getElementById("chaosFill").style.width=state.chaos+"%";document.getElementById("fameFill").style.width=Math.min(100,state.fame)+"%";document.getElementById("location").textContent=state.location;document.getElementById("day").textContent=state.day;document.getElementById("duckCount").textContent=state.duckCount;document.getElementById("candy").textContent=state.candy;const inv=document.getElementById("inventory");inv.innerHTML="";state.inventory.forEach(x=>{const s=document.createElement("span");s.className="item";s.textContent=x;inv.appendChild(s)})}
+function scene(ch,title,text,choices){document.getElementById("chapter").textContent="CHAPTER "+ch;document.getElementById("storyTitle").textContent=title;document.getElementById("storyText").textContent=text;const box=document.getElementById("choices");box.innerHTML="";choices.forEach(o=>{const b=document.createElement("button");b.className="choice";b.textContent=o.label;b.addEventListener("click",()=>{o.action();ui();save()});box.appendChild(b)});ui();save()}
+function ending(emoji,title,text){document.getElementById("endingEmoji").textContent=emoji;document.getElementById("endingTitle").textContent=title;document.getElementById("endingText").textContent=text;document.getElementById("ending").style.display="flex"}
+function home(){state.location="HOME";scene(1,"The Duck Incident 🦆","Shredder was five years old. It was a completely normal Tuesday. He walked into the backyard, holding his stuffed animal, and stopped immediately. There were forty-six ducks standing in a perfect circle around the swing set.",[
+{label:"🦆 Shredder walks toward the ducks",action:()=>{state.duckCount+=46;chaos(10);fame(2);addFlag("duckCircle");log("🦆 Shredder entered the duck circle.");backyard()}},
+{label:"🏃 Shredder runs back inside",action:()=>{energy(-3);log("🏃 Shredder ran inside. Three ducks followed.");kitchen()}},
+{label:"🍎 Shredder gives them his apple",action:()=>{state.duckCount+=12;chaos(7);addItem("🦆 grateful duck feather");log("🍎 Shredder gave one apple to twelve ducks.");backyard()}},
+{label:"📞 Shredder calls Mom",action:()=>{fame(1);log("📞 Shredder called Mom. She said, 'I'll be right there.'");kitchen()}}
+])}
+function backyard(){state.location="BACKYARD";scene(1,"The Ducks Are Waiting","One duck slowly waddled forward. It wore a tiny blue backpack. Shredder stared at it. The duck stared back. Then it dropped a folded piece of paper at his feet.",[
+{label:"📜 Shredder opens the note",action:()=>{chaos(8);addItem("📜 mysterious duck note");log("📜 The note contained only a drawing of a duck and a banana.");road()}},
+{label:"🎒 Shredder gives the duck his stuffed animal",action:()=>{addItem("🧸 duck-approved stuffed animal");fame(7);log("🧸 The duck accepted the stuffed animal like a business deal.");road()}},
+{label:"🦆 Shredder says 'quack' back",action:()=>{state.duckCount+=8;chaos(12);log("🦆 Shredder said 'quack.' Forty-six ducks answered.");road()}},
+{label:"🚪 Shredder hides behind the swing",action:()=>{energy(-5);log("🚪 Shredder hid. The ducks politely waited.");road()}}
+])}
+function kitchen(){state.location="KITCHEN";scene(1,"The Kitchen Situation 🍞","Shredder ran into the kitchen. He expected Mom. Instead, he found three ducks sitting at the table like they had just finished a meeting.",[
+{label:"🦆 Shredder asks what they are doing",action:()=>{chaos(7);fame(4);log("🦆 The ducks pointed toward the back door.");road()}},
+{label:"🍞 Shredder gives them bread",action:()=>{state.duckCount+=7;addItem("🍞 duck bread");chaos(11);log("🍞 Shredder fed the ducks. More appeared.");road()}},
+{label:"📺 Shredder turns on the TV",action:()=>{chaos(10);addItem("📺 suspicious remote");log("📺 The TV was showing live footage of the backyard.");road()}},
+{label:"📞 Shredder calls Mom again",action:()=>{fame(2);log("📞 Mom said, 'Do not follow the ducks.'");road()}}
+])}
+function road(){state.location="NEIGHBORHOOD";scene(1,"The Duck Parade 🦆","The ducks started marching toward the neighborhood. Shredder followed at a safe distance. Nobody else seemed surprised. A man watering his lawn simply waved at the ducks.",[
+{label:"🚶 Shredder follows them",action:()=>{day();chaos(10);log("🚶 Shredder followed the duck parade.");duckSchool()}},
+{label:"🏪 Shredder visits the corner store",action:()=>{day();log("🏪 Shredder stopped at the corner store. A duck was already inside.");store()}},
+{label:"🚲 Shredder tries to get ahead",action:()=>{energy(-10);fame(5);log("🚲 Shredder raced around the ducks.");duckSchool()}},
+{label:"📸 Shredder takes pictures",action:()=>{fame(12);addItem("📸 duck parade photos");log("📸 Shredder documented the duck parade.");duckSchool()}}
+])}
+function store(){state.location="CORNER STORE";scene(2,"The Duck Store 🏪","Inside the store, Shredder discovered an entire shelf labeled DUCK SUPPLIES. There were duck hats, duck whistles, duck-shaped cereal, and one mysterious key.",[
+{label:"🔑 Shredder takes the key",action:()=>{addItem("🔑 duck key");chaos(9);log("🔑 Shredder took the mysterious duck key.");school()}},
+{label:"🎩 Shredder buys a duck hat",action:()=>{addItem("🎩 duck hat");fame(8);log("🎩 Shredder bought a duck hat.");school()}},
+{label:"🥣 Shredder buys duck cereal",action:()=>{addItem("🥣 duck cereal");chaos(5);log("🥣 Shredder bought duck cereal.");school()}},
+{label:"🚪 Shredder leaves",action:()=>{log("🚪 Shredder decided the store was too ducky.");school()}}
+])}
+function duckSchool(){state.location="SCHOOL";scene(2,"Duck School 🏫","The ducks led Shredder to school. The front doors were open. The principal was a duck. The teachers were ducks. Even the announcements were somehow quacking.",[
+{label:"📚 Shredder attends duck class",action:()=>{chaos(16);fame(6);log("📚 Shredder attended duck school.");cafeteria()}},
+{label:"🦆 Shredder joins the duck team",action:()=>{state.duckCount+=20;fame(10);addItem("🏅 duck team badge");log("🦆 Shredder joined the duck team.");cafeteria()}},
+{label:"🚪 Shredder sneaks into the office",action:()=>{chaos(20);addItem("🗝️ principal's key");log("🚪 Shredder found a secret duck map.");cafeteria()}},
+{label:"🍌 Shredder asks about bananas",action:()=>{chaos(13);addItem("🍌 forbidden banana");log("🍌 A duck teacher gave Shredder a banana and whispered, 'Not yet.'");cafeteria()}}
+])}
+function school(){state.location="SCHOOL";scene(2,"The Very Normal School 🏫","Shredder arrived at school. Everything looked normal for approximately three seconds. Then the principal walked past wearing a duck costume.",[
+{label:"🦆 Shredder follows the principal",action:()=>{chaos(14);log("🦆 Shredder followed the principal through a secret door.");cafeteria()}},
+{label:"🍎 Shredder goes to the cafeteria",action:()=>{log("🍎 Shredder went to the cafeteria. Every table had one duck.");cafeteria()}},
+{label:"🚪 Shredder goes home",action:()=>{fame(3);log("🚪 Shredder decided school was enough.");homeLater()}}
+])}
+function cafeteria(){state.location="CAFETERIA";scene(2,"The Duck Cafeteria 🍕","At lunch, Shredder saw a giant door behind the cafeteria. A sign read: DUCK CORPORATION — EMPLOYEES ONLY.",[
+{label:"🏢 Shredder enters Duck Corporation",action:()=>{chaos(22);fame(9);log("🏢 Shredder entered Duck Corporation.");corporation()}},
+{label:"🍕 Shredder eats lunch",action:()=>{energy(10);log("🍕 Shredder ate lunch while seventeen ducks watched.");corporation()}},
+{label:"🔑 Shredder uses the duck key",action:()=>{if(state.inventory.includes("🔑 duck key")||state.inventory.includes("🗝️ principal's key")){chaos(18);log("🔑 The duck key opened a secret elevator.");spaceship()}else{chaos(7);log("🔑 Shredder did not have the right key.");corporation()}}},
+{label:"🦆 Shredder asks a duck for directions",action:()=>{fame(5);log("🦆 The duck pointed toward Duck Corporation.");corporation()}}
+])}
+function corporation(){state.location="DUCK CORPORATION";scene(3,"Duck Corporation 🏢","Shredder entered a giant office building operated entirely by ducks. A duck in a suit slid a clipboard across the desk. It said: SHREDDER — PROMOTION PENDING.",[
+{label:"💼 Shredder accepts the job",action:()=>{fame(15);chaos(18);addItem("💼 duck employee badge");log("💼 Shredder became the youngest duck employee in history.");meeting()}},
+{label:"📋 Shredder reads the clipboard",action:()=>{chaos(13);addItem("📋 suspicious duck contract");log("📋 The contract contained forty-seven pages about bananas.");meeting()}},
+{label:"🚨 Shredder pulls the fire alarm",action:()=>{chaos(28);log("🚨 Shredder pulled the fire alarm. Every duck applauded.");meeting()}},
+{label:"🏃 Shredder leaves",action:()=>{energy(-7);log("🏃 Shredder left Duck Corporation with a duck following him.");meeting()}}
+])}
+function meeting(){state.location="BOARDROOM";scene(3,"The Duck Board Meeting 📊","A giant screen displayed: THE DUCK PLAN HAS ENTERED PHASE TWO. The room went silent. Then every duck looked at Shredder.",[
+{label:"🤝 Shredder agrees to help",action:()=>{fame(18);chaos(14);log("🤝 Shredder agreed to help the ducks.");mania()}},
+{label:"❓ Shredder asks what phase two is",action:()=>{chaos(12);log("❓ Nobody answered. A duck handed Shredder a banana.");mania()}},
+{label:"🍌 Shredder eats the banana",action:()=>{chaos(26);log("🍌 Shredder ate the banana. Every screen turned pink.");mania()}},
+{label:"🏃 Shredder runs",action:()=>{energy(-12);log("🏃 Shredder ran through the boardroom while ducks chased him.");mania()}}
+])}
+function spaceship(){state.location="DUCK SPACESHIP";scene(3,"Duck Spaceship 🛸","The secret elevator did not stop on a floor. It opened directly into a spaceship shaped like a duck. Shredder looked at the controls. Every button said QUACK.",[
+{label:"🛸 Shredder launches it",action:()=>{chaos(35);fame(20);log("🛸 Shredder launched the duck spaceship.");spaceEnding()}},
+{label:"🔴 Shredder presses the red button",action:()=>{chaos(42);log("🔴 The red button summoned one million ducks.");spaceEnding()}},
+{label:"🦆 Shredder asks a duck for instructions",action:()=>{fame(12);log("🦆 The duck pointed at the only button labeled HOME.");mainEnding()}},
+{label:"🏠 Shredder goes home",action:()=>{log("🏠 Shredder decided he was five and this was enough.");mainEnding()}}
+])}
+function mania(){state.location="DUCK CITY";day();scene(4,"DUCK MANIA 🦆💥","By sunset, the entire city had become Duck City. Duck buses filled the streets. Duck billboards covered buildings. A giant duck statue stood in the town square. Shredder was still five years old.",[
+{label:"👑 Shredder becomes Duck King",action:()=>{fame(35);chaos(30);ending("👑🦆","THE DUCK KING ENDING","Shredder was crowned Duck King. He gave every duck a tiny hat and declared Tuesday the official Duck Holiday.")}},
+{label:"🚔 Shredder gets arrested by Duck Police",action:()=>{chaos(38);ending("🚔🦆","THE DUCK JAIL ENDING","The Duck Police arrested Shredder for excessive quacking. His cell had a surprisingly comfortable pillow.")}},
+{label:"🛸 Shredder boards the Duck Spaceship",action:()=>{chaos(45);ending("🛸🦆","THE SPACE DUCK ENDING","The ducks launched Shredder into space. Nobody had checked whether this was legal.")}},
+{label:"🏠 Shredder finally goes home",action:()=>{log("🏠 Shredder decided he had enough duck nonsense.");mainEnding()}}
+])}
+function homeLater(){state.location="HOME";scene(4,"Back Home 🏠","Shredder finally got home. There were only three ducks on the porch, which felt like a victory.",[
+{label:"🍬 Shredder waits for Mom",action:()=>mainEnding()},
+{label:"🦆 Shredder invites the ducks inside",action:()=>{chaos(18);state.duckCount+=3;ending("🦆🏠","THE DUCK HOUSE ENDING","Mom walked in and discovered three ducks sitting politely in the living room. Shredder said it was normal.")}}
+])}
+function mainEnding(){state.location="HOME";state.candy=1;addItem("🍬 candy from Mom");ending("🍬❤️","THE MAIN ENDING","Shredder finally made it home. He was covered in feathers, carrying several suspicious duck objects, and had absolutely no explanation. Mom opened the door and said, 'There you are! I got you some candy.' Shredder was five years old. The end.")}
+function spaceEnding(){ending("🛸🦆","THE SPACE DUCK ENDING","Shredder flew past the moon in a duck-shaped spaceship. The ducks cheered. Shredder wondered whether Mom would still give him candy if he came home from space.")}
+function ending(emoji,title,text){document.getElementById("endingEmoji").textContent=emoji;document.getElementById("endingTitle").textContent=title;document.getElementById("endingText").textContent=text;document.getElementById("ending").style.display="flex"}
+function restart(chaosMode){state=fresh();if(chaosMode){state.chaos=35;state.duckCount=67;state.inventory.push("🍌 suspicious banana","🎩 duck hat")}document.getElementById("ending").style.display="none";document.getElementById("log").innerHTML="";home();ui();save()}
+function runDuck(){const runner=document.getElementById("runner");runner.style.display="block";runner.style.animation="none";void runner.offsetWidth;runner.style.animation="run "+(2+Math.random()*2.1)+"s linear forwards";setTimeout(()=>runner.style.display="none",4300)}
+function scheduleDuck(){clearTimeout(duckTimer);duckTimer=setTimeout(()=>{runDuck();scheduleDuck()},2800+Math.random()*5200)}
+document.getElementById("resetBtn").addEventListener("click",()=>restart(false));document.getElementById("againBtn").addEventListener("click",()=>restart(false));document.getElementById("chaosBtn").addEventListener("click",()=>restart(true));
+ui();log("🦆 Shredder, age 5, stepped into the backyard.");home();scheduleDuck();
+</script>
+</body>
+</html>
